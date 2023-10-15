@@ -58,6 +58,12 @@ const food = {
     src: randomImg()
 }
 
+const bomb = {
+  x: randomPosition(),
+  y: randomPosition(),
+  src: "./imgs/bomba.png",
+}; 
+
 let direction, loopId
 
 const drawFood = () => {
@@ -67,6 +73,14 @@ const drawFood = () => {
     image.src = src;
     ctx.drawImage(image, x, y, size, size);
 }
+
+const drawBomb = () => {
+  const { x, y, src } = bomb;
+
+  const image = new Image();
+  image.src = src;
+  ctx.drawImage(image, x, y, size, size);
+};
 
 const drawSnake = () => {
     snake.forEach((position, index) => {        
@@ -141,6 +155,10 @@ const chackEat = () => {
         food.x = x
         food.y = y
         food.src = randomImg()
+    } 
+    
+    if (head.x == bomb.x && head.y == bomb.y) {
+        gameOver();
     }
 }
 
@@ -161,13 +179,17 @@ const checkCollision = () => {
     }
 }
 
-const gameOver = () => {
-    direction = undefined
+let isGameOver = false;
 
-    menu.style.display = "flex"
-    finalScore.innerText = score.innerText
-    canvas.style.filter = "blur(2px)"
-}
+const gameOver = () => {
+  isGameOver = true;
+  direction = undefined;
+  ctx.fillStyle = randomColor();
+
+  menu.style.display = "flex";
+  finalScore.innerText = score.innerText;
+  canvas.style.filter = "blur(2px)";
+};
 
 const gameLoop = () => {
     clearInterval(loopId)
@@ -175,6 +197,7 @@ const gameLoop = () => {
     ctx.clearRect(0, 0, 600, 600)
     drawGrid()
     drawFood()
+    drawBomb()
     moveSnake()
     drawSnake()
     chackEat()
