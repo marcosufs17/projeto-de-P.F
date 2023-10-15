@@ -36,6 +36,22 @@ const randomImg = () => {
     return fruits[rand];
   };
 
+const randomColor = () => {
+  const colors = [
+    "black",
+    "red",
+    "white",
+    "purple",
+    "orange",
+    "yellow",
+    "green",
+  ];
+
+  const rand = Math.round(Math.random() * (colors.length - 1) + 0);
+
+  return colors[rand];
+};
+
 const food = {
     x: randomPosition(),
     y: randomPosition(),
@@ -53,13 +69,7 @@ const drawFood = () => {
 }
 
 const drawSnake = () => {
-    ctx.fillStyle = "#ddd"
-
-    snake.forEach((position, index) => {
-        if (index == snake.length - 1) {
-            ctx.fillStyle = "white"
-        }
-
+    snake.forEach((position, index) => {        
         ctx.fillRect(position.x, position.y, size, size)
     })
 }
@@ -111,7 +121,15 @@ const chackEat = () => {
     if (head.x == food.x && head.y == food.y) {
         incrementScore()
         snake.push(head)
-
+        
+    if (food.src == "./imgs/banana.png") {
+      ctx.fillStyle = "yellow";
+    } else if (food.src == "./imgs/uva.png") {
+      ctx.fillStyle = "purple";
+    } else {
+      ctx.fillStyle = "red";
+    }
+        
         let x = randomPosition()
         let y = randomPosition()
 
@@ -164,7 +182,7 @@ const gameLoop = () => {
 
     loopId = setTimeout(() => {
         gameLoop()
-    }, 300)
+    }, 100)
 }
 
 gameLoop()
