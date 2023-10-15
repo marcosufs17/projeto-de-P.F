@@ -6,8 +6,6 @@ const finalScore = document.querySelector(".final-score > span")
 const menu = document.querySelector(".menu-screen")
 const buttonPlay = document.querySelector(".btn-play")
 
-const audio = new Audio("../assets/audio.mp3")
-
 const size = 30
 
 const initialPosition = { x: 270, y: 240 }
@@ -27,30 +25,31 @@ const randomPosition = () => {
     return Math.round(number / 30) * 30
 }
 
-const randomColor = () => {
-    const red = randomNumber(0, 255)
-    const green = randomNumber(0, 255)
-    const blue = randomNumber(0, 255)
-
-    return `rgb(${red}, ${green}, ${blue})`
-}
+const randomImg = () => {
+    const maca = "./imgs/maca.png";
+    const banana = "./imgs/banana.png";
+    const uva = "./imgs/uva.png";
+  
+    const fruits = [banana, uva, maca];
+    const rand = Math.round(Math.random() * (fruits.length - 1) + 0);
+  
+    return fruits[rand];
+  };
 
 const food = {
     x: randomPosition(),
     y: randomPosition(),
-    color: randomColor()
+    src: randomImg()
 }
 
 let direction, loopId
 
 const drawFood = () => {
-    const { x, y, color } = food
+    const { x, y, src } = food;
 
-    ctx.shadowColor = color
-    ctx.shadowBlur = 6
-    ctx.fillStyle = color
-    ctx.fillRect(x, y, size, size)
-    ctx.shadowBlur = 0
+    const image = new Image();
+    image.src = src;
+    ctx.drawImage(image, x, y, size, size);
 }
 
 const drawSnake = () => {
@@ -112,7 +111,6 @@ const chackEat = () => {
     if (head.x == food.x && head.y == food.y) {
         incrementScore()
         snake.push(head)
-        audio.play()
 
         let x = randomPosition()
         let y = randomPosition()
@@ -124,7 +122,7 @@ const chackEat = () => {
 
         food.x = x
         food.y = y
-        food.color = randomColor()
+        food.src = randomImg()
     }
 }
 
