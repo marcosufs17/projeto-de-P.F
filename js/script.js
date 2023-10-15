@@ -214,6 +214,7 @@ const gameLoop = () => {
 gameLoop()
 
 document.addEventListener("keydown", ({ key }) => {
+    if (isGameOver) return;
     if (key == "ArrowRight" && direction != "left") {
         direction = "right"
     }
