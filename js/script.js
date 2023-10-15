@@ -136,13 +136,13 @@ const chackEat = () => {
         incrementScore()
         snake.push(head)
         
-    if (food.src == "./imgs/banana.png") {
-      ctx.fillStyle = "yellow";
-    } else if (food.src == "./imgs/uva.png") {
-      ctx.fillStyle = "purple";
-    } else {
-      ctx.fillStyle = "red";
-    }
+        if (food.src == "./imgs/banana.png") {
+          ctx.fillStyle = "yellow";
+        } else if (food.src == "./imgs/uva.png") {
+          ctx.fillStyle = "purple";
+        } else {
+          ctx.fillStyle = "red";
+        }
         
         let x = randomPosition()
         let y = randomPosition()
@@ -155,6 +155,9 @@ const chackEat = () => {
         food.x = x
         food.y = y
         food.src = randomImg()
+        
+        bomb.x = randomPosition();
+        bomb.y = randomPosition();
     } 
     
     if (head.x == bomb.x && head.y == bomb.y) {
